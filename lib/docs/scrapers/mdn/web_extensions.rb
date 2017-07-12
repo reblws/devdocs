@@ -1,7 +1,7 @@
 module Docs
   class WebExtensions < Mdn
-    prepend FixInternalUrlsBehavior
-    prepend FixRedirectionsBehavior
+    # prepend FixInternalUrlsBehavior
+    # prepend FixRedirectionsBehavior
 
     self.name = 'WebExtensions'
     self.slug = 'web_extensions'
@@ -11,6 +11,7 @@ module Docs
     html_filters.push 'mdn/clean_html',  'web_extensions/entries', 'title'
 
     options[:root_title] = 'WebExtensions'
+    options[:only_pattern] = [/API/,]
 
     # options[:fix_urls] = ->(url) do
       # # url.sub! 'https://developer.mozilla.org/en-US/docs/Add-ons/WebExtensions', "#{WebExtensions.base_url}"

@@ -52,12 +52,13 @@ module Docs
       def get_name
         if slug.include? 'API'
           split_slug = slug.split('/')
-          method = split_slug.pop
-
-          # Lowercase the first letter to fix: BrowserAction and Cookies
-          type = split_slug.pop
-          type = type ? type.sub(/^A-Z/, &:downcase) : type
-          name = type == 'API' ? method : type + '.' + method
+          if split_slug.size > 2
+            _, type, method = split_slug
+            type = type ? type.sub(/^A-Z/, &:downcase) : type
+            name = type + '.' + method
+          else
+            name = split_slug.last
+          end
         elsif slug.include? 'manifest'
           if slug == 'manifest.json'
             name = 'manifest.json'
@@ -76,7 +77,7 @@ module Docs
         if slug.include? 'manifest'
           type = 'Manifest keys'
         elsif slug.include? 'API'
-          type, _ = name.split '.'
+          type, _ = name.split('.')
         else
           type = 'Miscellaneous'
         end
